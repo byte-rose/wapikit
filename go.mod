@@ -1,6 +1,8 @@
 module github.com/wapikit/wapikit
 
-go 1.22.3
+go 1.22.0
+
+toolchain go1.23.4
 
 require (
 	ariga.io/atlas-go-sdk v0.2.3

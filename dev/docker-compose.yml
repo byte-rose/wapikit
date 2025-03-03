@@ -1,6 +1,7 @@
 services:
   database:
     image: postgres:13
+    pull_policy: never
     ports:
       - "5432:5432"
     networks:
@@ -17,6 +18,7 @@ services:
 
   redis:
     image: redis:6
+    pull_policy: never
     ports:
       - "6379:6379"
     networks:
@@ -31,6 +33,7 @@ services:
     build:
       context: ../
       dockerfile: dev/dev.Dockerfile
+      no_cache: true
     command: [ "make", "dev-frontend" ]
     ports:
       - "3000:3000"
@@ -48,6 +51,7 @@ services:
     build:
       context: ../
       dockerfile: dev/dev.Dockerfile
+      no_cache: true
     command: [ "make", "dev-backend-docker" ]
     ports:
       - "8000:8000"
@@ -57,14 +61,16 @@ services:
       - redis
     volumes:
       - ../:/app
-      - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache
     networks:
       - wapikit-dev
 
 volumes:
   wapikit-dev-db:
-  wapikit-dev-redis:
+    name: wapikit-dev-db
 
+  wapikit-dev-redis:
+    name: wapikit-dev-redis
 
 networks:
   wapikit-dev:
+    name: wapikit-dev-network

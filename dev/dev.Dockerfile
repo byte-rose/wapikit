@@ -1,11 +1,14 @@
-FROM golang:1.20 AS go
+FROM golang:1.22 AS go
 
-FROM node:16 AS node
+FROM node:18 AS node
 
 COPY --from=go /usr/local/go /usr/local/go
 ENV GOPATH /go
 ENV CGO_ENABLED=0
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+
+# Install PNPM
+RUN npm install -g pnpm
 
 WORKDIR /app
 CMD [ "sleep infinity" ]
