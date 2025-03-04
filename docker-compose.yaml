@@ -50,7 +50,7 @@ services:
         "./wapikit --install --idempotent --yes --config '' && ./wapikit --config ''",
       ]
     environment:
-      - WAPIKIT_environment=production
+      - WAPIKIT_environment=development
       - WAPIKIT_app__address=0.0.0.0:8000
       - WAPIKIT_app__cors_allowed_origins = ["http://localhost:8000"]
       - WAPIKIT_app__websocket_server_address=0.0.0.0:8081

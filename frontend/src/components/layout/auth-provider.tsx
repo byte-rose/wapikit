@@ -51,8 +51,8 @@ const AuthProvisioner: React.FC<{ children: React.ReactNode }> = ({ children }) 
 	useEffect(() => {
 		if (phoneNumbersResponse && templatesResponse) {
 			writeProperty({
-				phoneNumbers: phoneNumbersResponse,
-				templates: templatesResponse
+				phoneNumbers: Array.isArray(phoneNumbersResponse) ? phoneNumbersResponse : [],
+				templates: Array.isArray(templatesResponse) ? templatesResponse : []
 			})
 		}
 	}, [phoneNumbersResponse, templatesResponse, writeProperty])

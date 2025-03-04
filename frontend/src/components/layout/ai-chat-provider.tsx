@@ -18,7 +18,7 @@ const AiChatProvider = ({ children }: { children: React.ReactNode }) => {
 		},
 		{
 			query: {
-				enabled: featureFlags?.SystemFeatureFlags.isAiIntegrationEnabled
+				enabled: featureFlags?.SystemFeatureFlags?.isAiIntegrationEnabled || false
 			}
 		}
 	)

@@ -39,6 +39,7 @@ services:
       - "3000:3000"
     environment:
       - WAPIKIT_API_URL=http://backend:8000
+      - NODE_ENV=development
     depends_on:
       - database
       - redis
@@ -61,6 +62,8 @@ services:
       - redis
     environment:
       - WAPIKIT_FRONTEND_DIR=""
+      - WAPIKIT_environment=development
+      - WAPIKIT_debug=true
     volumes:
       - ../:/app
     networks:

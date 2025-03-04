@@ -408,11 +408,11 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 											templateMessageComponentParameterForm
 										}
 										key={'template-parameter-form'}
-										template={templatesResponse?.find(template => {
+										template={templatesResponse && Array.isArray(templatesResponse) ? templatesResponse.find(template => {
 											return (
 												template.id === campaignForm.getValues('templateId')
 											)
-										})}
+										}) : undefined}
 									/>
 								</ScrollArea>
 							</div>
@@ -428,12 +428,14 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 
 									<div className="relative z-30 h-96">
 										<TemplateMessageRenderer
-											templateMessage={templatesResponse?.find(template => {
+											templateMessage={templatesResponse && Array.isArray(templatesResponse) ? templatesResponse.find(template => {
 												return (
 													template.id ===
-													campaignForm.getValues('templateId')
+													campaignForm.getValues(
+														'templateId'
+													)
 												)
-											})}
+											}) : undefined}
 											parameterValues={templateMessageComponentParameterForm.getValues()}
 										/>
 									</div>
@@ -497,10 +499,12 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 										<FormLabel>Select the lists</FormLabel>
 										<MultiSelect
 											options={
-												listsResponse?.data?.lists.map(list => ({
+												listsResponse?.data?.lists && Array.isArray(listsResponse?.data?.lists) 
+												? listsResponse.data.lists.map(list => ({
 													label: list.name,
 													value: list.uniqueId
-												})) || []
+												})) 
+												: []
 											}
 											onValueChange={e => {
 												campaignForm.setValue('lists', e, {
@@ -524,10 +528,12 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 										<FormLabel>Select the tags to add</FormLabel>
 										<MultiSelect
 											options={
-												tags?.tags?.map(tag => ({
+												tags?.tags && Array.isArray(tags.tags)
+												? tags.tags.map(tag => ({
 													label: tag.name,
 													value: tag.uniqueId
-												})) || []
+												}))
+												: []
 											}
 											onValueChange={e => {
 												campaignForm.setValue('tags', e, {
@@ -579,44 +585,40 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 											>
 												<SelectTrigger>
 													<div>
-														{templatesResponse
+														{templatesResponse && Array.isArray(templatesResponse) ? 
+															templatesResponse
 															?.map(template => {
 																if (
 																	template.id ===
-																	campaignForm.getValues(
-																		'templateId'
-																	)
+																	campaignForm.getValues('templateId')
 																) {
-																	const stringToReturn = `${template.name} - ${template.language} - ${template.category}`
-																	return stringToReturn
-																} else {
-																	return null
+																	return template.name
 																}
+																return null
 															})
-															.filter(isPresent)[0] ||
-															'Select message template'}
+															.filter(Boolean)
+															.join(', ') || 'Select a template'
+														: 'Select a template'}
 													</div>
 												</SelectTrigger>
 												<SelectContent side="bottom" className="max-h-64">
-													{!templatesResponse ||
+													{!templatesResponse || !Array.isArray(templatesResponse) ||
 													templatesResponse?.length === 0 ? (
 														<SelectItem
 															value={'no message template'}
-															disabled
+															disabled={true}
 														>
-															No message template.
+															No message templates
 														</SelectItem>
 													) : (
 														<>
-															{templatesResponse?.map(
+															{Array.isArray(templatesResponse) && templatesResponse?.map(
 																(template, index) => (
 																	<SelectItem
 																		key={`${template.id}-${index}`}
 																		value={template.id}
 																	>
-																		{template.name} -{' '}
-																		{template.language} -{' '}
-																		{template.category}
+																		{template.name}
 																	</SelectItem>
 																)
 															)}
@@ -663,7 +665,8 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 											>
 												<SelectTrigger>
 													<div>
-														{phoneNumbersResponse
+														{phoneNumbersResponse && Array.isArray(phoneNumbersResponse) ? 
+															phoneNumbersResponse
 															?.map(phoneNumber => {
 																if (
 																	phoneNumber.id ===
@@ -676,12 +679,13 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 																	return null
 																}
 															})
-															.filter(isPresent)[0] ||
-															'Select Phone Number'}
+															.filter(Boolean)
+															.join(', ') || 'Select Phone Number'
+														: 'Select Phone Number'}
 													</div>
 												</SelectTrigger>
 												<SelectContent side="bottom" className="max-h-64">
-													{!phoneNumbersResponse ||
+													{!phoneNumbersResponse || !Array.isArray(phoneNumbersResponse) ||
 													phoneNumbersResponse?.length === 0 ? (
 														<SelectItem
 															value={'no phone numbers found'}
@@ -691,7 +695,7 @@ const NewCampaignForm: React.FC<FormProps> = ({ initialData }) => {
 														</SelectItem>
 													) : (
 														<>
-															{phoneNumbersResponse?.map(phone => (
+															{Array.isArray(phoneNumbersResponse) && phoneNumbersResponse?.map(phone => (
 																<SelectItem
 																	key={phone.id}
 																	value={phone.id}
