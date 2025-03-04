@@ -11,7 +11,8 @@ export const AUTH_TOKEN_LS = '__auth_token'
 
 export function getBackendUrl() {
 	if (IS_DEVELOPMENT) {
-		return 'http://backend:8000/api'
+		// Try to use the host's IP address from the browser's perspective
+		return window.location.protocol + '//' + window.location.hostname + ':8000/api'
 	} else {
 		return '/api'
 	}
