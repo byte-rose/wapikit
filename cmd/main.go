@@ -32,11 +32,16 @@ var (
 	koa                = koanf.New(".")
 	fs                 stuffbin.FileSystem
 	appDir             string = "."
-	frontendDir        string = "frontend/out"
+	frontendDir        string = os.Getenv("WAPIKIT_FRONTEND_DIR")
 	isDebugModeEnabled bool
 )
 
 func init() {
+	// Set default frontend directory if not provided
+	if frontendDir == "" {
+		frontendDir = "frontend/out"
+	}
+
 	initFlags()
 
 	if koa.Bool("version") {

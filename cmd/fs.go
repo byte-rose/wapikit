@@ -73,6 +73,8 @@ func initFS(appDir, frontendDir string) stuffbin.FileSystem {
 	fStatic, err := stuffbin.NewLocalFS("/", files...)
 	if err != nil {
 		logger.Error("failed reading static files from disk: '%s': %v", err)
+		// Return the existing filesystem without merging to avoid nil pointer dereference
+		return fs
 	}
 
 	if err := fs.Merge(fStatic); err != nil {
