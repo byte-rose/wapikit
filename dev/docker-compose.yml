@@ -1,7 +1,7 @@
 services:
   database:
     image: postgres:13
-    pull_policy: never
+    pull_policy: if-not-present
     ports:
       - "5432:5432"
     networks:
@@ -18,7 +18,7 @@ services:
 
   redis:
     image: redis:6
-    pull_policy: never
+    pull_policy: if-not-present
     ports:
       - "6379:6379"
     networks:
