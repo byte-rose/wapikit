@@ -34,8 +34,8 @@ jwt_secret = "wdliahdsoihodjpkpeohifghqoew86e981u2ihn"
 url = "redis:6379"
 
 [whatsapp]
-businessAccountId = ""
-apiKey = ""
+businessAccountId = "647796864327279"
+apiKey = "EAAX7LMIGl80BO4WlZAmkXiIe1Jv8Lg9JkniubinNz6ekAQwQG598AGdDxK23nvGCTTAcFBtZAFmwlZAciVlp1OzBqpCjfwWZCKrOG8Q6Ek3xrjllzJoXHF5hFQZCy8ZClykKUZABKnbqE4gKuCCdybpBSZAhYQwAXI8ZCWe4cXaXAiyChSxsSXRsCvC56bYZCZAdE7MllADKqGEZCfBAyb1UdCdpZBIllaRF4UDF4Wr0ZD"
 webhookSecret = ""
 
 

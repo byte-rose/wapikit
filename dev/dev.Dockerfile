@@ -10,5 +10,8 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 # Install PNPM
 RUN npm install -g pnpm
 
+# Install Atlas
+RUN curl -sSf https://atlasgo.sh | sh
+
 WORKDIR /app
 CMD [ "sleep infinity" ]
